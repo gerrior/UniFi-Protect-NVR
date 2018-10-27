@@ -14,7 +14,7 @@ environment := 1
 if environment = 1
 {
     manual := false
-    nircmd := "C:\Program Files (x86)\nircmd\nircmd.exe"
+    captureUtil := "C:\Program Files (x86)\MiniCap\minicap.exe"
     chrome := "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
     picDir := "C:\Users\NUCUSER\Dropbox\Camera\PC1\"
     picFilename := "CameraPC1"
@@ -26,7 +26,7 @@ if environment = 1
 else if environment = 2
 {
     manual := false
-    nircmd := "C:\Program Files (x86)\nircmd\nircmd.exe"
+    captureUtil := "C:\Program Files (x86)\MiniCap\minicap.exe"
     chrome := "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
     picDir := "C:\Users\NUC USER\Dropbox\Camera\PC2\"
     picFilename := "CameraPC2"
@@ -38,7 +38,7 @@ else if environment = 2
 else ; Dev
 {
     manual := true
-    nircmd := "C:\Program Files\nircmd\nircmd.exe"
+    captureUtil := "C:\Program Files\MiniCap\minicap.exe"
     chrome := "C:\Program Files\Google\Chrome\Application\chrome.exe"
     picDir := "C:\Users\Quicken\Pictures\"
     picFilename := "Dev"
@@ -57,17 +57,17 @@ RestartChrome.call()
 
 RestartChrome:
 
-run %nircmd% savescreenshot "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec%.png"
+run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% A.jpg" -capturescreen -exit -compress 2 -convert gray
 sleep, 1000 ; DelayInMilliseconds (Next command is too fast and Chrome is already closed)
 
 WinClose, ahk_exe chrome.exe
 
 run %chrome%
-sleep, 5000 ; DelayInMilliseconds
+sleep, 6000 ; DelayInMilliseconds
 click %loginPosX%, %loginPosY%
 
 sleep, 20000 ; DelayInMilliseconds
-run %nircmd% savescreenshot "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec%.png"
+run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% B.jpg" -capturescreen -exit -compress 2 -convert gray
 
 sleep, 1000 ; Weird, give time for nircmd to complete
 return

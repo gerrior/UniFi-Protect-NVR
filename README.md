@@ -7,7 +7,7 @@ I've found this very unreliable: disconnections, freezes, failure to load, etc. 
 
 I've given up on them and instead have come up with a script the will restart Chrome and navigate to the camera page ever 15 minutes. I take a before and after picture and save it to Dropbox so I can monitor it from afar. 
 
-**Approach** 
+**Approach**
 Using AutoHotKey on Windows 7, take a screenshot (with MiniCap); save it to Dropbox; close Chrome; start Chrome; press “Log on with Microsoft”; wait and take a screenshot; save it to Dropbox.
 
 **Technology Using**
