@@ -21,6 +21,7 @@ Using AutoHotKey on Windows 7, take a screenshot (with MiniCap); save it to Drop
 * Hide task bar
 * Disable automatic windows updates (set to download only)
 * Put shortcut to script and Chrome in startup folder. 
+* Change BIOS to power-on after power failure. 
 
 A prior version of this scritpt used NirCmd for screen capture but I found MiniCap could get a 95% reduction in file size. I'm not looking for perfection in my screen captures. I'm looking for quick validation things are working as expected. MiniCap allows me to compress and color ship the screen capture to achive goal of less storage space. The prior version using NirCmd is in an earlier commit of the script.
 

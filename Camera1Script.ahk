@@ -22,6 +22,7 @@ if environment = 1
     ; 1920 x 1080
     loginPosX := 900
     loginPosY := 690
+    emailAddress := "pathwaysocietycameras@outlook.com"
 }
 else if environment = 2
 {
@@ -34,6 +35,7 @@ else if environment = 2
     ; 1920 x 1080
     loginPosX := 900
     loginPosY := 690
+    emailAddress := "pathwaysocietycameras@outlook.com"
 }
 else ; Dev
 {
@@ -45,6 +47,7 @@ else ; Dev
     interval := 120000
     loginPosX := 600
     loginPosY := 580
+    emailAddress := "pathwaysocietycameras@outlook.com"
 }
 
 
@@ -69,8 +72,8 @@ click %loginPosX%, %loginPosY%
 
 ; Micorsoft made a change on 12/20/2018 that necessitated this change. 
 ; Need to type in the email address and not actually sign in. 
-sleep, 1000 ; DelayInMilliseconds
-Send pathwaysocietycameras@outlook.com{enter}
+sleep, 1750 ; DelayInMilliseconds
+Send %emailAddress%{enter}
 
 sleep, 20000 ; DelayInMilliseconds
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% B.jpg" -capturescreen -exit -compress 2 -convert gray
