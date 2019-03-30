@@ -3,6 +3,7 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; Boiler plate above ^^^
+CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
 
 #Persistent
 
@@ -10,6 +11,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; 1 = Camera 1 PC
 ; 2 = Camera 2 PC
 environment := 1
+
+timeout := 60000 ; 1 minute
 
 if environment = 1
 {
@@ -55,10 +58,25 @@ else ; Dev
 ; 15 minutes = 900000
 SetTimer, RestartChrome, %interval%
 
-^j::
-RestartChrome.call()
+^k::
+FindPic("usethisaccount.png")
+return 
 
-RestartChrome:
+^j::
+RestartChrome()
+return 
+
+RestartChrome()
+{
+global manual
+global captureUtil
+global chrome
+global picDir
+global picFilename
+global interval
+global loginPosX
+global loginPosY
+global emailAddress
 
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% A.jpg" -capturescreen -exit -compress 2 -convert gray
 sleep, 1000 ; DelayInMilliseconds (Next command is too fast and Chrome is already closed)
@@ -66,17 +84,55 @@ sleep, 1000 ; DelayInMilliseconds (Next command is too fast and Chrome is alread
 WinClose, ahk_exe chrome.exe
 
 run %chrome%
-sleep, 6000 ; DelayInMilliseconds
+FindPic("logonwithmicrosoft.png")
 ; Click on "Log on with Microsoft" on the Comcast Business screen
 click %loginPosX%, %loginPosY%
 
 ; Micorsoft made a change on 12/20/2018 that necessitated this change. 
 ; Need to type in the email address and not actually sign in. 
-sleep, 1750 ; DelayInMilliseconds
+FindPic("usethisaccount.png")
 Send %emailAddress%{enter}
 
 sleep, 20000 ; DelayInMilliseconds
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% B.jpg" -capturescreen -exit -compress 2 -convert gray
 
 sleep, 1000 ; Weird, give time for nircmd to complete
-return
+}
+
+; --------------------------------------------------------
+; Find a image on the screen or exit after timeout value
+; --------------------------------------------------------
+FindPic(file)
+{
+global timeout
+
+before := A_TickCount
+done := false
+
+loop {
+	ImageSearch, FoundX, FoundY, 450, 600, 1200, 800, %file%
+
+	if ErrorLevel = 2
+		MsgBox FindUseThisAccout: Could not conduct the search.
+	else if ErrorLevel = 1 
+	{
+    		; MsgBox FindUseThisAccout: Image could not be found on the screen.
+	}
+	else
+	{
+		; MsgBox FindUseThisAccout: The image was found at %FoundX%x%FoundY%.
+		done := true
+	}
+
+	after := A_TickCount
+	diff := after - before 
+
+	if diff >= timeout
+		done := true
+
+	if done = 1 ; true
+		break
+}
+; MsgBox Time lapse %diff%, %FoundX%, %FoundY% 
+}
+
