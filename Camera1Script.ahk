@@ -105,6 +105,7 @@ sleep, 1000 ; Weird, give time for nircmd to complete
 FindPic(file)
 {
 global timeout
+global picDir
 
 before := A_TickCount
 done := false
@@ -133,6 +134,13 @@ loop {
 	if done = 1 ; true
 		break
 }
+
+FormatTime, dt, A_Now, ShortDate
+FormatTime, tm, A_Now, Time
+logMsg = %dt% %tm%	%diff%`n
+
+FileAppend %logMsg%, %picDir%%file%.txt
+
 ; MsgBox Time lapse %diff%, %FoundX%, %FoundY% 
 }
 
