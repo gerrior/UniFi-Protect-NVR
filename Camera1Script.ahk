@@ -113,7 +113,7 @@ before := A_TickCount
 done := false
 
 loop {
-	ImageSearch, FoundX, FoundY, 450, 600, 1200, 800, %file%
+	ImageSearch, FoundX, FoundY, 450, 240, 1200, 800, %file%
 
 	if ErrorLevel = 2
 		MsgBox FindPic: Could not conduct the search for %file%.
