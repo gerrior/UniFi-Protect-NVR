@@ -88,10 +88,11 @@ FindPic("logonwithmicrosoft.png")
 ; Click on "Log on with Microsoft" on the Comcast Business screen
 click %loginPosX%, %loginPosY%
 
-; Micorsoft made a change on 12/20/2018 that necessitated this change. 
-; Need to type in the email address and not actually sign in. 
-FindPic("usethisaccount.png")
-Send %emailAddress%{enter}
+; Micorsoft made a change on 4/23/2019 @ 9am PT that obviated the need for this code. 
+;; Micorsoft made a change on 12/20/2018 that necessitated this change. 
+;; Need to type in the email address and not actually sign in. 
+;FindPic("usethisaccount.png")
+;Send %emailAddress%{enter}
 
 sleep, 20000 ; DelayInMilliseconds
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% B.jpg" -capturescreen -exit -compress 2 -convert gray
