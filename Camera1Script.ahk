@@ -11,6 +11,7 @@ CoordMode Pixel  ; Interprets the coordinates below as relative to the screen ra
 ; 1 = Camera 1 PC
 ; 2 = Camera 2 PC
 environment := 1
+runClickRefresh := true
 
 timeout := 60000 ; 1 minute
 
@@ -57,14 +58,37 @@ else ; Dev
 ; 1 minute = 60000
 ; 15 minutes = 900000
 SetTimer, RestartChrome, %interval%
+SetTimer, ClickRefresh, 60000
 
 ^k::
-FindPic("usethisaccount.png")
+ClickRefresh()
+;FindPic("usethisaccount.png")
 return 
 
 ^j::
 RestartChrome()
 return 
+
+; --------------------------------------------------------
+;											  ClickRefresh
+; If a given image doesn't load, a "Refresh?" link appears.
+; For now, blindly click where each button could be.
+; A HUD will appear but goes away after a moment.	
+; --------------------------------------------------------
+ClickRefresh()
+{
+global runClickRefresh
+
+if (runClickRefresh) 
+{
+click 400, 400
+click 1000, 400
+click 1600, 400
+click 400, 760
+click 1000, 760
+click 1600, 760
+}
+}
 
 RestartChrome()
 {
@@ -77,6 +101,9 @@ global interval
 global loginPosX
 global loginPosY
 global emailAddress
+global runClickRefresh
+
+runClickRefresh := false
 
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% A.jpg" -capturescreen -exit -compress 2 -convert gray
 sleep, 1000 ; DelayInMilliseconds (Next command is too fast and Chrome is already closed)
@@ -98,6 +125,8 @@ sleep, 20000 ; DelayInMilliseconds
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% B.jpg" -capturescreen -exit -compress 2 -convert gray
 
 sleep, 1000 ; Weird, give time for nircmd to complete
+
+runClickRefresh := true
 }
 
 ; --------------------------------------------------------
