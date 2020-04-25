@@ -155,51 +155,50 @@ runClickRefresh := true
 ; --------------------------------------------------------
 FindPic(file)
 {
-global timeout
-global picDir
-global captureUtil
-global picFilename
+    global timeout
+    global picDir
+    global captureUtil
+    global picFilename
 
-before := A_TickCount
-done := false
+    before := A_TickCount
+    done := false
 
-loop {
-	ImageSearch, FoundX, FoundY, 450, 240, 1200, 800, %file%
+    loop {
+        ImageSearch, FoundX, FoundY, 450, 240, 1200, 800, %file%
 
-	if ErrorLevel = 2
-		MsgBox FindPic: Could not conduct the search for %file%.
-	else if ErrorLevel = 1 
-	{
-    		; MsgBox FindPic: Image %file% could not be found on the screen.
-	}
-	else
-	{
-		; MsgBox FindPic: The image was found at %FoundX%x%FoundY%.
-		done := true
-	}
+        if ErrorLevel = 2
+        MsgBox FindPic: Could not conduct the search for %file%.
+        else if ErrorLevel = 1
+        {
+            ; MsgBox FindPic: Image %file% could not be found on the screen.
+        }
+        else
+        {
+            ; MsgBox FindPic: The image was found at %FoundX%x%FoundY%.
+            done := true
+        }
 
-	after := A_TickCount
-	diff := after - before 
+        after := A_TickCount
+        diff := after - before
 
-	if (done) or (diff >= timeout)
-	{
-		if (diff >= timeout)
-		{
-			; What was on the screen at the time of the timeout?
-			; Use this screenshot to generate new slug to look for
-			; %file% must end in png. jpg has too much compression and images won't work.
-			run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% %file%" -capturescreen -exit
-		}
-		break
-	}
+        if (done) or (diff >= timeout)
+        {
+            if (diff >= timeout)
+            {
+                ; What was on the screen at the time of the timeout?
+                ; Use this screenshot to generate new slug to look for
+                ; %file% must end in png. jpg has too much compression and images won't work.
+                run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% %file%" -capturescreen -exit
+
+                FormatTime, dt, A_Now, ShortDate
+                FormatTime, tm, A_Now, Time
+                logMsg = %dt% %tm%    %diff%`n
+
+                FileAppend %logMsg%, %picDir%%file%.txt
+
+                ; MsgBox Time lapse %diff%, %FoundX%, %FoundY%
+            }
+            break
+        }
+    }
 }
-
-FormatTime, dt, A_Now, ShortDate
-FormatTime, tm, A_Now, Time
-logMsg = %dt% %tm%	%diff%`n
-
-FileAppend %logMsg%, %picDir%%file%.txt
-
-; MsgBox Time lapse %diff%, %FoundX%, %FoundY% 
-}
-
