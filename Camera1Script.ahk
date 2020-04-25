@@ -187,8 +187,8 @@ loop {
 		{
 			; What was on the screen at the time of the timeout?
 			; Use this screenshot to generate new slug to look for
-			; Use png. jpg has too much compression.
-			run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% %file%.png" -capturescreen -exit
+			; %file% must end in png. jpg has too much compression and images won't work.
+			run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% %file%" -capturescreen -exit
 		}
 		break
 	}
