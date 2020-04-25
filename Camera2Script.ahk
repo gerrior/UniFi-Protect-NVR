@@ -189,16 +189,16 @@ FindPic(file)
                 ; Use this screenshot to generate new slug to look for
                 ; %file% must end in png. jpg has too much compression and images won't work.
                 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% %file%" -capturescreen -exit
-
-                FormatTime, dt, A_Now, ShortDate
-                FormatTime, tm, A_Now, Time
-                logMsg = %dt% %tm%    %diff%`n
-
-                FileAppend %logMsg%, %picDir%%file%.txt
-
-                ; MsgBox Time lapse %diff%, %FoundX%, %FoundY%
             }
             break
         }
+
+        FormatTime, dt, A_Now, ShortDate
+        FormatTime, tm, A_Now, Time
+        logMsg = %dt% %tm%    %diff%`n
+
+        FileAppend %logMsg%, %picDir%%file%.txt
+
+        ; MsgBox Time lapse %diff%, %FoundX%, %FoundY%
     }
 }
