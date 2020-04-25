@@ -11,7 +11,18 @@ A "Refresh?" link will sometimes appear in place of a camera image. A one-minute
 
 **Approach**
 
-Using AutoHotKey on Windows 7, take a screenshot (with MiniCap); save it to Dropbox; close Chrome; start Chrome; press “Log on with Microsoft”; wait and take a screenshot; save it to Dropbox.
+* Every 15 minutes
+* Using AutoHotKey on Windows 7, take a screenshot (with MiniCap)
+* Save screenshot to Dropbox
+* Close Chrome
+* Start Chrome
+* Press “Log on with Microsoft”
+* Enter email address
+* wait and take a second screenshot
+* Save it to Dropbox
+
+* Every minute
+* Press the "Refresh?" link(s)
 
 **Technology Used**
 
