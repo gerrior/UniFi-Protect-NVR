@@ -14,6 +14,7 @@ environment := 1
 runClickRefresh := true
 
 timeout := 60000 ; 1 minute
+; timeout := 15000 ; 15 seconds
 
 if environment = 1
 {
@@ -27,6 +28,7 @@ if environment = 1
     loginPosX := 900
     loginPosY := 690
     emailAddress := "pathwaysocietycameras@outlook.com"
+    loginMethod := 1
 }
 else if environment = 2
 {
@@ -40,6 +42,7 @@ else if environment = 2
     loginPosX := 900
     loginPosY := 690
     emailAddress := "pathwaysocietycameras@outlook.com"
+    loginMethod := 1
 }
 else ; Dev
 {
@@ -52,6 +55,7 @@ else ; Dev
     loginPosX := 600
     loginPosY := 580
     emailAddress := "pathwaysocietycameras@outlook.com"
+    loginMethod := 0
 }
 
 
@@ -77,17 +81,37 @@ return
 ; --------------------------------------------------------
 ClickRefresh()
 {
-global runClickRefresh
+	global runClickRefresh
 
-if (runClickRefresh) 
-{
-click 400, 400
-click 1000, 400
-click 1600, 400
-click 400, 760
-click 1000, 760
-click 1600, 760
+	if (runClickRefresh) 
+	{
+	click 400, 400
+	click 1000, 400
+	click 1600, 400
+	click 400, 760
+	click 1000, 760
+	click 1600, 760
+	}
 }
+
+; --------------------------------------------------------
+;										LoginWithMicrosoft
+; --------------------------------------------------------
+LoginWithMicrosoft(method, email)
+{
+	if (method = 1)
+	{
+		; Micorsoft switched back to 2018 behavior on 4/22/2020 @ 6pm PT. 
+		; Micorsoft made a change on 4/23/2019 @ 9am PT that obviated the need for this code. 
+		;; Micorsoft made a change on 12/20/2018 that necessitated this change. 
+		;; Need to type in the email address and not actually sign in. 
+
+		; Wait for the signin screen
+		; Enter email address and press enter
+		; Password is not needed.
+		FindPic("signinwithmicrosoft.png")
+		Send %email%{enter}
+	}
 }
 
 RestartChrome()
@@ -102,6 +126,7 @@ global loginPosX
 global loginPosY
 global emailAddress
 global runClickRefresh
+global loginMethod
 
 runClickRefresh := false
 
@@ -115,11 +140,7 @@ FindPic("logonwithmicrosoft.png")
 ; Click on "Log on with Microsoft" on the Comcast Business screen
 click %loginPosX%, %loginPosY%
 
-; Micorsoft made a change on 4/23/2019 @ 9am PT that obviated the need for this code. 
-;; Micorsoft made a change on 12/20/2018 that necessitated this change. 
-;; Need to type in the email address and not actually sign in. 
-;FindPic("usethisaccount.png")
-;Send %emailAddress%{enter}
+LoginWithMicrosoft(loginMethod, emailAddress)
 
 sleep, 20000 ; DelayInMilliseconds
 run %captureUtil% -save "%picDir%%picFilename% %A_YYYY%-%A_MM%-%A_DD% at %A_Hour%.%A_Min%.%A_Sec% B.jpg" -capturescreen -exit -compress 2 -convert gray
