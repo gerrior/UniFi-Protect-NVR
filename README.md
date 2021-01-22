@@ -1,13 +1,11 @@
-# Comcast Genetec
-A process to restart Chrome to get a semi-reliable way to view Comcast/Genetec security cameras. 
+# Chrome & UniFi Protect NVR
+A process to restart Chrome to get a semi-reliable way to view UniFi Protect NVR security cameras. 
 
-When I think of security cameras; I think of a screen with a view onto those cameras. Comcast's SmartOffice security camera product is a white label of Genetec's product. The way you view your cameras is through a webpage.
+When I think of security cameras; I think of a screen with a view onto those cameras. One way you can view your UniFi cameras is through a webpage.
 
-I've found this very unreliable: disconnections, freezes, failure to load, etc. I've worked with Comcast (and they with Genetec) to try and get it reliable but to no avail. 
+I've found this very unreliable: disconnections, freezes, failure to load, etc. I had similar issues with Comcast to try and get it reliable but to no avail. This is a clone of that [project](https://github.com/gerrior/ComcastGenetec).
 
-I've given up on them and instead have come up with a script the will restart Chrome and navigate to the camera page every 15 minutes. I take a before and after picture and save it to Dropbox so I can monitor it from afar. 
-
-A "Refresh?" link will sometimes appear in place of a camera image. A one-minute timer will click the screen in the 6 areas where a "Refresh?" link might appear. If the "Refresh?" link is not visible then a HUD will dispay briefly and go away. This process is skipped if the "restart Chrome" function is in progress. 
+This script will restart Chrome and navigate to the camera page every 15 minutes. I take a before and after picture and save it to Dropbox so I can monitor it from afar. 
 
 **Approach**
 
